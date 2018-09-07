@@ -24,3 +24,21 @@ aspectjx {
 
 ##### MPermission
 获取权限
+
+##### 自用
+```
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+```
+
+```
+  implementation 'com.github.SheTieJun:aspectutils:master-SNAPSHOT'
+```
+
+maybe need
+```
+    configurations {
+        all*.exclude group: 'com.android.support', module: 'support-v13'
+    }
+```
