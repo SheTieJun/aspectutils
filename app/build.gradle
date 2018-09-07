@@ -69,6 +69,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation project(':aspectlib')
+//    implementation project(':aspectlib')
+    implementation 'com.github.SheTieJun:aspectutils:50ffefc75f'
     implementation 'com.github.SheTieJun:Base:0.0.4'
 }
