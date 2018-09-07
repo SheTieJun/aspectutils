@@ -33,6 +33,7 @@ aspectjx {
 ```
 
 ```
+  implementation 'com.github.SheTieJun:Base:1999f34b3a'
   implementation 'com.github.SheTieJun:aspectutils:master-SNAPSHOT'
 ```
 
