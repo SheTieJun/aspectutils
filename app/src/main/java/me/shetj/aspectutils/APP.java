@@ -2,7 +2,7 @@ package me.shetj.aspectutils;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 
 import me.shetj.base.s;
 
@@ -20,7 +20,7 @@ public class APP extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		s.init(this,true, "");
+		s.init(this,true);
 	}
 
 

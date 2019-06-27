@@ -7,7 +7,7 @@ import me.shetj.base.base.IView
 class AspectPresenter(view :IView) :BasePresenter<AspectModel>(view) {
     @DebugTrace
     fun testAspect() {
-        view.updateView(getMessage(1,"测试"))
+        view?.updateView(getMessage(1,"测试"))
     }
 
     init {
