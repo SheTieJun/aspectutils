@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Pointcut;
 
 import io.reactivex.functions.Consumer;
 import me.shetj.base.tools.app.ArmsUtils;
+import timber.log.Timber;
 
 @Aspect
 public class PermissionAspect {
@@ -21,6 +22,10 @@ public class PermissionAspect {
 	@Around("methodAnnotatedWithMPermission(permission)")
 	public void checkPermission(final ProceedingJoinPoint joinPoint, MPermission permission) throws Throwable {
 		String[] permissionStr = permission.value();
+
+		for (String s : permissionStr) {
+			Timber.i(s);
+		}
 		RxPermissions	rxPermissions = new RxPermissions((FragmentActivity) joinPoint.getThis());
 		rxPermissions.request(permissionStr)
 						.subscribe(new Consumer<Boolean>() {

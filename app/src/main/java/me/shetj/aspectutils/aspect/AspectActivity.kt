@@ -34,7 +34,7 @@ class AspectActivity : BaseActivity<AspectPresenter>() {
 
     }
 
-    @MPermission(value = [(Manifest.permission.CAMERA),(Manifest.permission.WRITE_EXTERNAL_STORAGE)])
+    @MPermission(value = [Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE])
     private fun testAspect() {
         ArmsUtils.makeText("testAspect ok")
     }

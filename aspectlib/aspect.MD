@@ -20,3 +20,12 @@ Pointcut{
 
 #### MPermission
 获取权限
+
+
+### 后续：
+- 异步
+- 缓存
+- 延迟
+- SP sharePre
+- 单击，防抖动
+- 
