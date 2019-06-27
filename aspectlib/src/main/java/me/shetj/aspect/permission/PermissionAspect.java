@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
+import io.reactivex.functions.Consumer;
 import me.shetj.base.tools.app.ArmsUtils;
 
 @Aspect
@@ -22,15 +23,18 @@ public class PermissionAspect {
 		String[] permissionStr = permission.value();
 		RxPermissions	rxPermissions = new RxPermissions((FragmentActivity) joinPoint.getThis());
 		rxPermissions.request(permissionStr)
-						.subscribe(aBoolean -> {
-							if (aBoolean) {
-								try {
-									joinPoint.proceed();
-								} catch (Throwable throwable) {
-									throwable.printStackTrace();
+						.subscribe(new Consumer<Boolean>() {
+							@Override
+							public void accept(Boolean aBoolean) throws Exception {
+								if (aBoolean) {
+									try {
+										joinPoint.proceed();
+									} catch (Throwable throwable) {
+										throwable.printStackTrace();
+									}
+								} else {
+									ArmsUtils.Companion.makeText("没有对应权限，无法使用该功能~！");
 								}
-							} else {
-								ArmsUtils.Companion.makeText("没有对应权限，无法使用该功能~！");
 							}
 						});
 	}
