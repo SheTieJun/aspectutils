@@ -47,7 +47,6 @@ aspectjx {
 ##### 
 
 ```
-  implementation 'com.github.SheTieJun:Base:12004150ad'
+implementation 'com.github.SheTieJun:aspectutils:12004150ad'
 ```
-
 
