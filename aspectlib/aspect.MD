@@ -1,3 +1,45 @@
+#### DebugAspect
+
+计算时间
+
+#### MPermission
+
+获取权限
+
+#### CheckNetWork
+
+检查网络
+
+#### SingleClick
+
+防止连续点击
+
+
+
+
+
+
+
+### 后续：
+
+- [ ] 拦截
+
+- [ ] 异步
+
+- [ ] 缓存
+
+- [ ] 延迟
+
+- [x] SP sharePre
+
+- [x] 单击，防抖动
+
+- [x] 网络判断
+
+  
+
+
+
 ```
 Call（Before）
 Pointcut{
@@ -12,20 +54,88 @@ Pointcut{
     Pointcut Method
   execution（After）
 }
+
+
+
+
+```
+
+**对 class   @Aspect 标注**
+
+```
+execution   用于匹配方法执行的连接点 
+
+within 用于匹配指定类型内的方法执行
+
+this  用于匹配当前AOP代理对象类型的执行方法；注意是AOP代理对象的类型匹配，这就可能包括引入接口也类型匹配
+
+target 用于匹配当前目标对象类型的执行方法；注意是目标对象的类型匹配，这样就不包括引入接口也类型匹配
+
+args   用于匹配当前执行的方法传入的参数为指定类型的执行方法
+
+@within    用于匹配所以持有指定注解类型内的方法
+@target    用于匹配当前目标对象类型的执行方法，其中目标对象持有指定的注解
+
+@args  用于匹配当前执行的方法传入的参数持有指定注解的执行
+
+@annotation    用于匹配当前执行方法持有指定注解的方法
+```
+
+```
+joinPoint.getArgs()  获取切入方法的参数
+```
+
+```
+joinPoint.getThis()  或者自己  可能是activity 也可能是其他类
+```
+
+```
+- java.lang.Object[] getArgs()：获取连接点方法运行时的入参列表；
+- Signature getSignature() ：获取连接点的方法签名对象；
+- java.lang.Object getTarget() ：获取连接点所在的目标对象；
+- java.lang.Object getThis() ：获取代理对象本身； 
+
 ```
 
 
-#### DebugAspect
-计算时间
-
-#### MPermission
-获取权限
 
 
-### 后续：
-- 异步
-- 缓存
-- 延迟
-- SP sharePre
-- 单击，防抖动
-- 
+
+
+
+
+
+
+
+
+
+
+### 错误
+- formal unbound in pointcut 
+```
+@Pointcut("execution(@me.shetj.aspect.network.CheckNetwork * *(..) ")
+```
+修改后
+```
+	@Pointcut("execution(@me.shetj.aspect.network.CheckNetwork * *(..)) && @annotation(checkNetwork)")
+```
+
+
+
+
+
+- org.aspectj.weaver.patterns.ParserException: pointcut name at position 1
+
+  不小心写错 了，是说你第一位就错了
+
+  ```
+  @Pointcut("execution(@me.shetj.aspect.network.CheckNetwork ..(..)) 
+  ```
+
+  ```
+  Pointcut("execution(@me.shetj.aspect.network.CheckNetwork * *(..)) 
+  ```
+
+- applying to join point that doesn't return void: method-execution(java.lang.String me.shetj.aspectutils.aspect.AspectPresenter.testSPrefs())
+
+  切入方法有返回，但是我忘记返回了

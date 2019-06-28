@@ -31,12 +31,23 @@ class AspectActivity : BaseActivity<AspectPresenter>() {
         btn_get_log.setOnClickListener {
             mPresenter?.testAspect()
         }
+        btn_net_work.setOnClickListener {
+            mPresenter?.testNetAspect()
+        }
+        btn_Single_Click.setOnClickListener {
+            mPresenter?.testSingleClick(btn_Single_Click)
+        }
+
+        btn_SPrefs.setOnClickListener {
+            mPresenter?.testSPrefs( )
+        }
+
 
     }
 
     @MPermission(value = [Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE])
     private fun testAspect() {
-        ArmsUtils.makeText("testAspect ok")
+        ArmsUtils.makeText("获取权限ok")
     }
 
     override fun updateView(message: Message) {

@@ -1,4 +1,4 @@
-package me.shetj.aspect.debug;
+package me.shetj.aspect.network;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,9 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 方法开始事件，结束时间
+ *网络判断，isNeedNet 是否有网才执行
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface DebugTrace {
+public @interface CheckNetwork {
+    boolean isNeedNet() default true; //是否需要网络才能执行
 }

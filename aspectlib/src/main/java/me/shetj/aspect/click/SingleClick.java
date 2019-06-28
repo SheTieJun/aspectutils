@@ -1,4 +1,4 @@
-package me.shetj.aspect.debug;
+package me.shetj.aspect.click;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,9 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 方法开始事件，结束时间
+ * 防止连续点击
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface DebugTrace {
+public @interface SingleClick {
+    long value() default 1000L ;//默认1秒
 }
