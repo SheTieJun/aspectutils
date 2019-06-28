@@ -60,7 +60,9 @@ Pointcut{
 
 ```
 
-**对 class   @Aspect 标注**
+- 使用注解来标记切入点，也可通过一些方法
+
+**对 实现具体class 使用 @Aspect 标注**
 
 ```
 execution   用于匹配方法执行的连接点 
@@ -94,7 +96,6 @@ joinPoint.getThis()  或者自己  可能是activity 也可能是其他类
 - Signature getSignature() ：获取连接点的方法签名对象；
 - java.lang.Object getTarget() ：获取连接点所在的目标对象；
 - java.lang.Object getThis() ：获取代理对象本身； 
-
 ```
 
 
@@ -117,7 +118,7 @@ joinPoint.getThis()  或者自己  可能是activity 也可能是其他类
 ```
 修改后
 ```
-	@Pointcut("execution(@me.shetj.aspect.network.CheckNetwork * *(..)) && @annotation(checkNetwork)")
+@Pointcut("execution(@me.shetj.aspect.network.CheckNetwork * *(..)) && @annotation(checkNetwork)")
 ```
 
 
@@ -138,4 +139,4 @@ joinPoint.getThis()  或者自己  可能是activity 也可能是其他类
 
 - applying to join point that doesn't return void: method-execution(java.lang.String me.shetj.aspectutils.aspect.AspectPresenter.testSPrefs())
 
-  切入方法有返回，但是我忘记返回了
+  切入的方法有返回，但是我忘记返回了。要保持一直

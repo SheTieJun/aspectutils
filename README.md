@@ -1,45 +1,53 @@
 # aspectutils
 develop and collect some scene to use aop
 
+借鉴：
 https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
 
 ```
-   classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.2'
+   classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.4'
 ```
 
-
+app：build.gradle
 ```
+
 apply plugin: 'android-aspectjx'//面向切面
 
 aspectjx {
-    exclude 'android.support'
+    exclude 'androidx.*'
 }
-
+```
+如果也想写自己独特的
+```
+   implementation 'org.aspectj:aspectjrt:1.8.14'
 ```
 
 
+#### DebugAspect
 
-##### DebugAspect
-计算时间
+计算方法执行时间
 
-##### MPermission
+#### MPermission
+
 获取权限
 
-##### 自用
-```
-    configurations.all {
-        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-    }
-```
+#### CheckNetWork
+
+检查网络
+
+#### SingleClick
+
+防止连续点击
+
+#### SPrefs
+
+保存到SP中 
+
+
+##### 
 
 ```
-  implementation 'com.github.SheTieJun:Base:1999f34b3a'
-  implementation 'com.github.SheTieJun:aspectutils:master-SNAPSHOT'
+  implementation 'com.github.SheTieJun:Base:12004150ad'
 ```
 
-maybe need
-```
-    configurations {
-        all*.exclude group: 'com.android.support', module: 'support-v13'
-    }
-```
+
