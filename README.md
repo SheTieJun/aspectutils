@@ -46,7 +46,12 @@ aspectjx {
 
 ##### 
 
+### 使用
+
+由于部分依赖包是使用base,所以需要使用base
+
 ```
+implementation "com.github.SheTieJun:Base:$base_kt_version"
 implementation 'com.github.SheTieJun:aspectutils:12004150ad'
 ```
 
