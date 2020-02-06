@@ -7,6 +7,7 @@ import me.shetj.aspect.network.CheckNetwork
 import me.shetj.aspect.sharepre.SPrefs
 import me.shetj.base.base.BasePresenter
 import me.shetj.base.base.IView
+import me.shetj.base.kt.toMessage
 import me.shetj.base.tools.app.ArmsUtils
 import me.shetj.base.tools.file.SPUtils
 import timber.log.Timber
@@ -20,7 +21,7 @@ class AspectPresenter(view :IView) :BasePresenter<AspectModel>(view) {
 
     @DebugTrace
     fun testAspect() {
-        view?.updateView(getMessage(1,"测试"))
+        view?.updateView("测试".toMessage())
     }
 
     @CheckNetwork(isNeedNet = true)
@@ -37,10 +38,8 @@ class AspectPresenter(view :IView) :BasePresenter<AspectModel>(view) {
 
     @SPrefs(key = "test")
     fun testSPrefs(): String {
-
-        val get = SPUtils[view!!.rxContext, "test", "xxx"]
+        val get = SPUtils.get(view.rxContext, "test", "xxx")
         Timber.i("getInfo = $get")
-
         return "hahahah ${int++}"
     }
 

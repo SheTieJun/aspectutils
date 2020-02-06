@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  *网络判断，isNeedNet 是否有网才执行
+ * @author shetj
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

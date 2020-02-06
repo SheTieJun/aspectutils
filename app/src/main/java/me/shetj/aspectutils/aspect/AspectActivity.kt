@@ -4,9 +4,11 @@ import android.Manifest
 import android.os.Bundle
 import android.os.Message
 import kotlinx.android.synthetic.main.activity_aspect.*
+import me.shetj.aspect.activity.Constant
 import me.shetj.aspect.permission.MPermission
 import me.shetj.aspectutils.R
 import me.shetj.base.base.BaseActivity
+import me.shetj.base.kt.start
 import me.shetj.base.tools.app.ArmsUtils
 import timber.log.Timber
 
@@ -22,6 +24,8 @@ class AspectActivity : BaseActivity<AspectPresenter>() {
 
     override fun initData() {
         mPresenter = AspectPresenter(this)
+        val stringExtra = intent.getStringExtra(Constant.EXTRE_FROME)
+        Timber.i("stringExtra = $stringExtra")
     }
     override fun initView() {
 
@@ -36,6 +40,7 @@ class AspectActivity : BaseActivity<AspectPresenter>() {
         }
         btn_Single_Click.setOnClickListener {
             mPresenter?.testSingleClick(btn_Single_Click)
+            start(AspectActivity::class.java)
         }
 
         btn_SPrefs.setOnClickListener {
@@ -52,7 +57,6 @@ class AspectActivity : BaseActivity<AspectPresenter>() {
 
     override fun updateView(message: Message) {
         super.updateView(message)
-        Timber.e("updateView")
     }
 
 }
