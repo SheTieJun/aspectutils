@@ -1,46 +1,57 @@
 package me.shetj.aspect.permission;
 
 
-import androidx.fragment.app.FragmentActivity;
+import android.os.Build;
+import android.util.Log;
 
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
-import io.reactivex.functions.Consumer;
-import me.shetj.base.tools.app.ArmsUtils;
-import timber.log.Timber;
+import me.shetj.aspect.kit.ActivityExtKt;
+
 
 @Aspect
 public class PermissionAspect {
 	@Pointcut("execution(@me.shetj.aspect.permission.MPermission * *(..)) && @annotation(permission)")
 	public void methodAnnotatedWithMPermission(MPermission permission) {}
 
-	@Around("methodAnnotatedWithMPermission(permission)")
+    @Around("methodAnnotatedWithMPermission(permission)")
 	public void checkPermission(final ProceedingJoinPoint joinPoint, MPermission permission) throws Throwable {
-		String[] permissionStr = permission.value();
 
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            try {
+                joinPoint.proceed();
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+            return;
+        }
+
+		String[] permissionStr = permission.value();
+		boolean aBoolean = true;
+        int length = permissionStr.length;
+        if (length == 0) return ;
+
+		StringBuilder buffer = new StringBuilder();
 		for (String s : permissionStr) {
-			Timber.i(s);
+		    buffer.append(s);
+            buffer.append("|");
 		}
-		RxPermissions	rxPermissions = new RxPermissions((FragmentActivity) joinPoint.getThis());
-		rxPermissions.request(permissionStr)
-						.subscribe(new Consumer<Boolean>() {
-							@Override
-							public void accept(Boolean aBoolean) throws Exception {
-								if (aBoolean) {
-									try {
-										joinPoint.proceed();
-									} catch (Throwable throwable) {
-										throwable.printStackTrace();
-									}
-								} else {
-									ArmsUtils.Companion.makeText("没有对应权限，无法使用该功能~！");
-								}
-							}
-						});
+		Log.i("PermissionAspect",buffer.toString());
+        AppCompatActivity activity = ((AppCompatActivity)joinPoint.getThis());
+        aBoolean = ActivityExtKt.hasPermission(activity,permissionStr,permission.isRequest());
+        if (aBoolean) {
+            try {
+                joinPoint.proceed();
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        } else {
+            Log.e("PermissionAspect","没有对应权限，无法使用该功能~！");
+        }
 	}
 }

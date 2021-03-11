@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import androidx.multidex.MultiDex;
 
-import me.shetj.base.s;
+import me.shetj.base.S;
 
 /**
  * <b>@packageName：</b> com.ebu.master<br>
@@ -20,7 +20,7 @@ public class APP extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		s.init(this,true);
+		S.init(this,true);
 	}
 
 

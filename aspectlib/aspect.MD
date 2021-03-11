@@ -111,7 +111,7 @@ https://www.jianshu.com/p/c3a4336a0f29?utm_source=oschina-app
 
 
 
-### 错误
+### 记录错误
 - formal unbound in pointcut 
 ```
 @Pointcut("execution(@me.shetj.aspect.network.CheckNetwork * *(..) ")

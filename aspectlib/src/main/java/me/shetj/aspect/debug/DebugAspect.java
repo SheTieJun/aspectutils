@@ -1,17 +1,11 @@
 package me.shetj.aspect.debug;
 
+import android.util.Log;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-
-import java.lang.reflect.Method;
-import java.sql.Timestamp;
-
-import me.jessyan.autosize.utils.LogUtils;
-import me.shetj.aspect.permission.MPermission;
-import me.shetj.base.tools.json.GsonKit;
-import timber.log.Timber;
 
 /**
  * <b>@packageName：</b> me.shetj.aspectutils<br>
@@ -32,22 +26,22 @@ public class DebugAspect {
 	@Around("DebugTraceMethod()")
 	public void beforeDebugTraceMethod(ProceedingJoinPoint joinPoint) throws Throwable {
 		String methodName = joinPoint.getSignature().getName();
-		Timber.i( methodName+" start time = " + System.currentTimeMillis());
+		Log.i("DebugAspect", methodName+" start time = " + System.currentTimeMillis());
 //		// 目标类全路径名
 		String targetName = joinPoint.getTarget().getClass().getName();
-		Timber.i("  : getSimpleName = " + joinPoint.getThis().getClass().getSimpleName());
+        Log.i("DebugAspect", "  : getSimpleName = " + joinPoint.getThis().getClass().getSimpleName());
 		// 反射得到目标类
-		Class clazz = Class.forName(targetName);
+//		Class clazz = Class.forName(targetName);
 // 目标方法名（正在访问的方法）
-		Timber.i("  : targetName = " + targetName);
+        Log.i("DebugAspect", "  : targetName = " + targetName);
 // 方法参数：数组类型
-		Object[] arguments = joinPoint.getArgs();
-		Timber.i("   : arguments =  " + GsonKit.objectToJson(arguments));
+//		Object[] arguments = joinPoint.getArgs();
+//        Log.i("DebugAspect", "   : arguments =  " + arguments);
 //// 反射得到目标类的所有方法
 //		Method[] methods = clazz.getMethods();
 //		Timber.i("   : arguments =  " + GsonKit.objectToJson(methods));
 		joinPoint.proceed();
-		Timber.i( methodName+ " end time = " +  System.currentTimeMillis());
+        Log.i("DebugAspect", methodName+ " end time = " +  System.currentTimeMillis());
 	}
 
 }

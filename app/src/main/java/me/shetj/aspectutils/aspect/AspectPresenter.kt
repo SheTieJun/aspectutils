@@ -3,25 +3,21 @@ package me.shetj.aspectutils.aspect
 import android.widget.Button
 import me.shetj.aspect.click.SingleClick
 import me.shetj.aspect.debug.DebugTrace
+import me.shetj.aspect.kit.SPUtils
 import me.shetj.aspect.network.CheckNetwork
 import me.shetj.aspect.sharepre.SPrefs
-import me.shetj.base.base.BasePresenter
-import me.shetj.base.base.IView
-import me.shetj.base.kt.toMessage
+import me.shetj.base.ktx.toMessage
+import me.shetj.base.mvp.BasePresenter
+import me.shetj.base.mvp.IView
 import me.shetj.base.tools.app.ArmsUtils
-import me.shetj.base.tools.file.SPUtils
-import timber.log.Timber
 
-class AspectPresenter(view :IView) :BasePresenter<AspectModel>(view) {
+class AspectPresenter(view : IView) : BasePresenter<AspectModel>(view) {
 
 
-    init {
-        model = AspectModel()
-    }
 
     @DebugTrace
     fun testAspect() {
-        view?.updateView("测试".toMessage())
+        ArmsUtils.makeText("测试测试")
     }
 
     @CheckNetwork(isNeedNet = true)
@@ -39,7 +35,6 @@ class AspectPresenter(view :IView) :BasePresenter<AspectModel>(view) {
     @SPrefs(key = "test")
     fun testSPrefs(): String {
         val get = SPUtils.get(view.rxContext, "test", "xxx")
-        Timber.i("getInfo = $get")
         return "hahahah ${int++}"
     }
 

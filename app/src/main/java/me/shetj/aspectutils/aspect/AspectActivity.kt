@@ -4,13 +4,11 @@ import android.Manifest
 import android.os.Bundle
 import android.os.Message
 import kotlinx.android.synthetic.main.activity_aspect.*
-import me.shetj.aspect.activity.Constant
 import me.shetj.aspect.permission.MPermission
 import me.shetj.aspectutils.R
-import me.shetj.base.base.BaseActivity
-import me.shetj.base.kt.start
+import me.shetj.base.ktx.start
+import me.shetj.base.mvp.BaseActivity
 import me.shetj.base.tools.app.ArmsUtils
-import timber.log.Timber
 
 class AspectActivity : BaseActivity<AspectPresenter>() {
 
@@ -23,9 +21,6 @@ class AspectActivity : BaseActivity<AspectPresenter>() {
     }
 
     override fun initData() {
-        mPresenter = AspectPresenter(this)
-        val stringExtra = intent.getStringExtra(Constant.EXTRE_FROME)
-        Timber.i("stringExtra = $stringExtra")
     }
     override fun initView() {
 
@@ -33,18 +28,17 @@ class AspectActivity : BaseActivity<AspectPresenter>() {
             testAspect()
         }
         btn_get_log.setOnClickListener {
-            mPresenter?.testAspect()
+            mPresenter.testAspect()
         }
         btn_net_work.setOnClickListener {
-            mPresenter?.testNetAspect()
+            mPresenter.testNetAspect()
         }
         btn_Single_Click.setOnClickListener {
-            mPresenter?.testSingleClick(btn_Single_Click)
-            start(AspectActivity::class.java)
+            mPresenter.testSingleClick(btn_Single_Click)
         }
 
         btn_SPrefs.setOnClickListener {
-            mPresenter?.testSPrefs( )
+            mPresenter.testSPrefs( )
         }
 
 

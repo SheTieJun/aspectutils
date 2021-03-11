@@ -1,60 +1,15 @@
-# aspectutils
-develop and collect some scene to use aop
+## AOPKit
 
-借鉴：
-https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
+### Aspect
 
-```
-   classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.4'
-```
-
-app：build.gradle
-```
-
-apply plugin: 'android-aspectjx'//面向切面
-
-aspectjx {
-    exclude 'androidx.*'
-}
-```
-如果也想写自己独特的
-```
-   implementation 'org.aspectj:aspectjrt:1.8.14'
-```
+#### DebugAspect 计算方法执行时间
+#### MPermission 获取权限
+#### CheckNetWork 检查网络
+#### SingleClick 防止连续点击
+#### SPrefs 保存到SP中
 
 
-#### DebugAspect
-
-计算方法执行时间
-
-#### MPermission
-
-获取权限
-
-#### CheckNetWork
-
-检查网络
-
-#### SingleClick
-
-防止连续点击
-
-#### SPrefs
-
-保存到SP中 
-
-
-##### 
-
-### 使用
-
-由于部分依赖包是使用base,所以需要使用base
-
-```
-implementation "com.github.SheTieJun:Base:$base_kt_version"
-implementation 'com.github.SheTieJun:aspectutils:12004150ad'
-```
-
+#### 记录
 ```
 execution	过滤出方法执行时的连接点
 within	过滤出制定类型内方法
