@@ -7,8 +7,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'android-aspectjx'//面向切面
 
 aspectjx {
-    exclude 'androidx.*'
-    exclude 'adnroid.*'
+    exclude 'androidx'
+    exclude 'android.support'
 }
 
 android {

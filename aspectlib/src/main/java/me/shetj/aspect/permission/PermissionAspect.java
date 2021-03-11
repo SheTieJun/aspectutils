@@ -32,7 +32,7 @@ public class PermissionAspect {
         }
 
 		String[] permissionStr = permission.value();
-		boolean aBoolean = true;
+
         int length = permissionStr.length;
         if (length == 0) return ;
 
@@ -43,7 +43,7 @@ public class PermissionAspect {
 		}
 		Log.i("PermissionAspect",buffer.toString());
         AppCompatActivity activity = ((AppCompatActivity)joinPoint.getThis());
-        aBoolean = ActivityExtKt.hasPermission(activity,permissionStr,permission.isRequest());
+        boolean aBoolean = ActivityExtKt.hasPermission(activity,permissionStr,permission.isRequest());
         if (aBoolean) {
             try {
                 joinPoint.proceed();
