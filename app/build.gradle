@@ -42,7 +42,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation project(':aspectlib')
+    implementation project(':aspectJlib')
     implementation "me.shetj.sdk:base:1.0.6"
     implementation  'org.aspectj:aspectjrt:1.9.6'
 }

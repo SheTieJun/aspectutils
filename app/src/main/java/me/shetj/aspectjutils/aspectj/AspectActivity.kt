@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.os.Message
 import android.widget.Button
 import kotlinx.android.synthetic.main.activity_aspect.*
-import me.shetj.aspect.click.SingleClick
-import me.shetj.aspect.kit.SPUtils
-import me.shetj.aspect.network.CheckNetwork
-import me.shetj.aspect.permission.MPermission
-import me.shetj.aspect.sharepre.SPrefs
+import me.shetj.aspectj.click.SingleClick
+import me.shetj.aspectj.kit.SPUtils
+import me.shetj.aspectj.network.CheckNetwork
+import me.shetj.aspectj.permission.MPermission
+import me.shetj.aspectj.sharepre.SPrefs
 import me.shetj.aspectjutils.R
 import me.shetj.base.mvp.BaseActivity
 import me.shetj.base.tools.app.ArmsUtils
