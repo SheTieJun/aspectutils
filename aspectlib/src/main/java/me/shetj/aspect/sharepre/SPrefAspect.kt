@@ -1,55 +1,51 @@
-package me.shetj.aspect.sharepre;
+package me.shetj.aspect.sharepre
 
-
-import android.app.Activity;
-import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
-import org.json.JSONObject;
-
-import me.shetj.aspect.kit.SPUtils;
+import android.app.Activity
+import android.util.Log
+import me.shetj.aspect.kit.SPUtils.Companion.put
+import me.shetj.aspect.kit.TAG
+import org.aspectj.lang.ProceedingJoinPoint
+import org.aspectj.lang.annotation.Around
+import org.aspectj.lang.annotation.Aspect
+import org.aspectj.lang.annotation.Pointcut
+import org.aspectj.lang.reflect.MethodSignature
+import org.json.JSONObject
 
 @Aspect
-public class SPrefAspect {
-    private final String POINT_CUT = "execution(@me.shetj.aspect.sharepre.SPrefs * *(..))";
-
-    @Pointcut(POINT_CUT)
-    public void onSPMethod(){
-
+class SPrefAspect {
+    @Pointcut("execution(@me.shetj.aspect.sharepre.SPrefs * *(..))")
+    fun onSPMethod() {
     }
 
-
     @Around("onSPMethod() && @annotation(sp) ")
-    public Object doSPMethod(ProceedingJoinPoint joinPoint,SPrefs sp){
+    fun doSPMethod(joinPoint: ProceedingJoinPoint, sp: SPrefs): Any? {
+        if (joinPoint.getThis() !is Activity) {
+            Log.e(TAG, "@SPrefs only supports the Activity")
+            return  joinPoint.proceed()
+        }
         try {
-            String key = sp.key(); //保存的key
-            if (key == null || key.isEmpty()){
-              return  joinPoint.proceed();
-            }else {
-                Object result = joinPoint.proceed(); //方法执行的结果
+            val key: String = sp.key //保存的key
+            return if (key == null || key.isEmpty()) {
+                joinPoint.proceed()
+            } else {
+                val result = joinPoint.proceed() //方法执行的结果
                 //获取方法返回类型
-                String type = ((MethodSignature) joinPoint.getSignature()).getReturnType().toString();
-                JSONObject object = new JSONObject();
-                object.put("result",result);
-                String json = object.toString();
-                Log.i("SPrefAspect", json);
-                if (joinPoint.getThis() instanceof  Activity){
-                    Activity activity = ((Activity)joinPoint.getThis());
-                    if (!"void".equals(type) && json != null && !json.isEmpty()) {
-                        SPUtils.put(activity,key,json);
+                val type = (joinPoint.signature as MethodSignature).returnType.toString()
+                val `object` = JSONObject()
+                `object`.put("result", result)
+                val json = `object`.toString()
+                Log.i("SPrefAspect", json)
+                if (joinPoint.getThis() is Activity) {
+                    val activity = joinPoint.getThis() as Activity
+                    if ("void" != type && json != null && !json.isEmpty()) {
+                        put(activity, key, json)
                     }
                 }
-                return result;
+                result
             }
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
+        } catch (throwable: Throwable) {
+            throwable.printStackTrace()
         }
-        return null;
+        return null
     }
 }

@@ -1,39 +1,44 @@
-package me.shetj.aspect.network;
+package me.shetj.aspect.network
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.util.Log;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import android.app.Activity
+import android.content.ContentValues
+import android.content.Context
+import android.net.ConnectivityManager
+import android.util.Log
+import me.shetj.aspect.kit.TAG
+import org.aspectj.lang.ProceedingJoinPoint
+import org.aspectj.lang.annotation.Around
+import org.aspectj.lang.annotation.Aspect
+import org.aspectj.lang.annotation.Pointcut
 
 @Aspect
-public class NetworkAspect {
+class NetworkAspect {
+    @Pointcut("execution(@me.shetj.aspect.network.CheckNetwork * *(..)) && @annotation(checkNetwork)")
+    fun checkNetworkMethod(checkNetwork: CheckNetwork?) {
+    }
 
-	@Pointcut("execution(@me.shetj.aspect.network.CheckNetwork * *(..)) && @annotation(checkNetwork)")
-	public void checkNetworkMethod(CheckNetwork checkNetwork) {
-	}
-
-
-	@Around("checkNetworkMethod(checkNetwork)")
-	public void beforeCheckNetworkMethod(ProceedingJoinPoint joinPoint,CheckNetwork checkNetwork) throws Throwable {
-		boolean needNet = checkNetwork.isNeedNet();
-		if (needNet){
-		    try {
-                ConnectivityManager manager = (ConnectivityManager)((Context)joinPoint.getThis()).getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                boolean	hasInternet = manager != null && manager.getActiveNetworkInfo() != null;
+    @Around("checkNetworkMethod(checkNetwork)")
+    @Throws(Throwable::class)
+    fun beforeCheckNetworkMethod(joinPoint: ProceedingJoinPoint, checkNetwork: CheckNetwork) {
+        if (joinPoint.getThis() !is Activity ) {
+            Log.e(TAG, "@CheckNetwork only supports the Activity")
+            return
+        }
+        val needNet: Boolean = checkNetwork.isNeedNet
+        if (needNet) {
+            try {
+                val manager = (joinPoint.getThis() as Context).applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val hasInternet = manager.activeNetworkInfo != null
                 if (hasInternet) {
-                    joinPoint.proceed();
-                }else {
-                    Log.i("NetworkAspect","暂无网络~！");
+                    joinPoint.proceed()
+                } else {
+                    Log.i(ContentValues.TAG, "暂无网络~！")
                 }
-            }catch (Exception e){
-		        e.printStackTrace();
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-		}else {
-			joinPoint.proceed();
-		}
-	}
+        } else {
+            joinPoint.proceed()
+        }
+    }
 }

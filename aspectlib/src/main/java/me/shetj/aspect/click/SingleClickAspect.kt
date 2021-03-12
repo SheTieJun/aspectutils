@@ -1,52 +1,41 @@
-package me.shetj.aspect.click;
+package me.shetj.aspect.click
 
-import android.view.View;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-
-import me.shetj.aspect.R;
+import android.view.View
+import me.shetj.aspect.R
+import org.aspectj.lang.ProceedingJoinPoint
+import org.aspectj.lang.annotation.Around
+import org.aspectj.lang.annotation.Aspect
+import org.aspectj.lang.annotation.Pointcut
 
 @Aspect
-public class SingleClickAspect {
-
-    private static int TIME_TAG = R.id.time_tag;
-
-    private final String POINT_CUT = "execution(@me.shetj.aspect.click.SingleClick * *(..)) && @annotation(singleClick)";
-
-    @Pointcut(POINT_CUT)
-    public void onSingClickMethod(SingleClick singleClick){
-
+class SingleClickAspect {
+    @Pointcut("execution(@me.shetj.aspect.click.SingleClick * *(..)) && @annotation(singleClick)")
+    fun onSingClickMethod(singleClick: SingleClick?) {
     }
 
-    @Around("onSingClickMethod(singleClick)")//连接点替换
-    public void doSingleClickMethod(ProceedingJoinPoint joinPoint , SingleClick singleClick)  {
-        View view = null;
-        for (Object arg : joinPoint.getArgs()) {
-            if (arg instanceof View) view = (View) arg;
+    @Around("onSingClickMethod(singleClick)") //连接点替换
+    fun doSingleClickMethod(joinPoint: ProceedingJoinPoint, singleClick: SingleClick) {
+        var view: View? = null
+        for (arg in joinPoint.args) {
+            if (arg is View) view = arg
         }
-        if (view != null){
-            Object tag = view.getTag(TIME_TAG);
-
-            long lastClickTime = tag!=null? (long) tag :0;
-
-
-            long currentTime = System.currentTimeMillis();
-
-            long value = singleClick.value();
-
-            if (currentTime - lastClickTime > value){
-                view.setTag(TIME_TAG,currentTime);
+        if (view != null) {
+            val tag = view.getTag(TIME_TAG)
+            val lastClickTime = if (tag != null) tag as Long else 0
+            val currentTime = System.currentTimeMillis()
+            val value: Long = singleClick.value
+            if (currentTime - lastClickTime > value) {
+                view.setTag(TIME_TAG, currentTime)
                 try {
-                    joinPoint.proceed();
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
+                    joinPoint.proceed()
+                } catch (throwable: Throwable) {
+                    throwable.printStackTrace()
                 }
             }
         }
     }
 
-
+    companion object {
+        private val TIME_TAG = R.id.time_tag
+    }
 }

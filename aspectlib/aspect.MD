@@ -1,24 +1,10 @@
-#### DebugAspect
+#### DebugAspect 计算时间
 
-计算时间
+#### MPermission 获取权限
 
-#### MPermission
+#### CheckNetWork 检查网络
 
-获取权限
-
-#### CheckNetWork
-
-检查网络
-
-#### SingleClick
-
-防止连续点击
-
-
-
-
-
-
+#### SingleClick 防止连续点击
 
 ### 后续：
 
@@ -140,3 +126,14 @@ https://www.jianshu.com/p/c3a4336a0f29?utm_source=oschina-app
 - applying to join point that doesn't return void: method-execution(java.lang.String me.shetj.aspectutils.aspect.AspectPresenter.testSPrefs())
 
   切入的方法有返回，但是我忘记返回了。要保持一直
+
+### Invalid byte tag in constant pool: 19
+```
+解决方案： 
+aspectjx {
+//关闭AspectJX功能
+enabled true
+//进行aop处理范围是当前项目包路径
+include 'com.company.package'
+}
+```

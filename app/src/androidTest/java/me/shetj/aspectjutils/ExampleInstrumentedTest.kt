@@ -1,4 +1,4 @@
-package me.shetj.aspectutils
+package me.shetj.aspectjutils
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4

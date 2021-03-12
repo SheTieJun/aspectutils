@@ -1,4 +1,4 @@
-package me.shetj.aspectutils.aspect
+package me.shetj.aspectjutils.aspectj
 
 import android.widget.Button
 import me.shetj.aspect.click.SingleClick
@@ -6,7 +6,6 @@ import me.shetj.aspect.debug.DebugTrace
 import me.shetj.aspect.kit.SPUtils
 import me.shetj.aspect.network.CheckNetwork
 import me.shetj.aspect.sharepre.SPrefs
-import me.shetj.base.ktx.toMessage
 import me.shetj.base.mvp.BasePresenter
 import me.shetj.base.mvp.IView
 import me.shetj.base.tools.app.ArmsUtils

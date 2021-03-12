@@ -1,4 +1,4 @@
-package me.shetj.aspectutils.aspect
+package me.shetj.aspectjutils.aspectj
 
 import me.shetj.base.mvp.BaseModel
 

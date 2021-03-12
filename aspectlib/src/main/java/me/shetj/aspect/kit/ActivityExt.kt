@@ -7,6 +7,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 
+val TAG = "AspectJ"
+
 /**
  * 针对6.0动态请求权限问题,判断是否允许此权限
  *  可以使用 [AppCompatActivity.registerForActivityResult] 替代

@@ -7,14 +7,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'android-aspectjx'//面向切面
 
 aspectjx {
-    exclude 'androidx'
-    exclude 'android.support'
+    enabled true
+    include 'me.shetj.aspectutils','me.shetj.aspect'
 }
 
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "me.shetj.aspectutils"
+        applicationId "me.shetj.aspectjutils"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -44,4 +44,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation project(':aspectlib')
     implementation "me.shetj.sdk:base:1.0.6"
+    implementation  'org.aspectj:aspectjrt:1.9.6'
 }

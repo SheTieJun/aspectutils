@@ -1,57 +1,56 @@
-package me.shetj.aspect.permission;
+package me.shetj.aspect.permission
 
-
-import android.os.Build;
-import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-
-import me.shetj.aspect.kit.ActivityExtKt;
-
+import android.app.Activity
+import android.os.Build
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import me.shetj.aspect.kit.SPUtils.Companion.put
+import me.shetj.aspect.kit.TAG
+import me.shetj.aspect.kit.hasPermission
+import org.aspectj.lang.ProceedingJoinPoint
+import org.aspectj.lang.annotation.Around
+import org.aspectj.lang.annotation.Aspect
+import org.aspectj.lang.annotation.Pointcut
+import java.util.*
 
 @Aspect
-public class PermissionAspect {
-	@Pointcut("execution(@me.shetj.aspect.permission.MPermission * *(..)) && @annotation(permission)")
-	public void methodAnnotatedWithMPermission(MPermission permission) {}
+class PermissionAspect {
+
+    @Pointcut("execution(@me.shetj.aspect.permission.MPermission * *(..)) && @annotation(permission)")
+    fun methodAnnotatedWithMPermission(permission: MPermission?) {
+    }
 
     @Around("methodAnnotatedWithMPermission(permission)")
-	public void checkPermission(final ProceedingJoinPoint joinPoint, MPermission permission) throws Throwable {
+    @Throws(Throwable::class)
+    fun checkPermission(joinPoint: ProceedingJoinPoint, permission: MPermission) {
+
+        if (joinPoint.getThis() !is Activity) {
+            Log.e(TAG, "@MPermission only supports the Activity")
+            return
+        }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             try {
-                joinPoint.proceed();
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
+                joinPoint.proceed()
+            } catch (throwable: Throwable) {
+                throwable.printStackTrace()
             }
-            return;
+            return
         }
-
-		String[] permissionStr = permission.value();
-
-        int length = permissionStr.length;
-        if (length == 0) return ;
-
-		StringBuilder buffer = new StringBuilder();
-		for (String s : permissionStr) {
-		    buffer.append(s);
-            buffer.append("|");
-		}
-		Log.i("PermissionAspect",buffer.toString());
-        AppCompatActivity activity = ((AppCompatActivity)joinPoint.getThis());
-        boolean aBoolean = ActivityExtKt.hasPermission(activity,permissionStr,permission.isRequest());
+        val permissionStr: Array<String> = permission.value
+        val length = permissionStr.size
+        if (length == 0) return
+        Log.i(TAG, permissionStr.joinToString(" , ", "[", "]"))
+        val activity = joinPoint.getThis() as AppCompatActivity
+        val aBoolean = activity.hasPermission(*permissionStr, isRequest = permission.isRequest)
         if (aBoolean) {
             try {
-                joinPoint.proceed();
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
+                joinPoint.proceed()
+            } catch (throwable: Throwable) {
+                throwable.printStackTrace()
             }
         } else {
-            Log.e("PermissionAspect","没有对应权限，无法使用该功能~！");
+            Log.e(TAG, "没有对应权限，无法使用该功能~！")
         }
-	}
+    }
 }
