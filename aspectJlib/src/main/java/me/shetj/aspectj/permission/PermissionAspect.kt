@@ -14,14 +14,13 @@ import org.aspectj.lang.annotation.Pointcut
 @Aspect
 class PermissionAspect {
 
-    @Pointcut("execution(@me.shetj.aspect.permission.MPermission * *(..)) && @annotation(permission)")
+    @Pointcut("execution(@me.shetj.aspectj.permission.MPermission * *(..)) && @annotation(permission)")
     fun methodAnnotatedWithMPermission(permission: MPermission?) {
     }
 
     @Around("methodAnnotatedWithMPermission(permission)")
     @Throws(Throwable::class)
     fun checkPermission(joinPoint: ProceedingJoinPoint, permission: MPermission) {
-
         if (joinPoint.getThis() !is Activity) {
             Log.e(TAG, "@MPermission only supports the Activity")
             return
@@ -36,8 +35,7 @@ class PermissionAspect {
             return
         }
         val permissionStr: Array<String> = permission.value
-        val length = permissionStr.size
-        if (length == 0) return
+        if (permissionStr.isNullOrEmpty()) return
         Log.i(TAG, permissionStr.joinToString(" , ", "[", "]"))
         val activity = joinPoint.getThis() as AppCompatActivity
         val aBoolean = activity.hasPermission(*permissionStr, isRequest = permission.isRequest)

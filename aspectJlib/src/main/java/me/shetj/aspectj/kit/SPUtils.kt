@@ -2,6 +2,7 @@ package me.shetj.aspectj.kit
 
 import android.content.Context
 import androidx.annotation.Keep
+import com.google.gson.Gson
 
 @Keep
 class SPUtils {
@@ -12,6 +13,7 @@ class SPUtils {
 
     companion object {
 
+        val gson by lazy { Gson() }
         /**
          * 保存在手机里面的文件名
          */

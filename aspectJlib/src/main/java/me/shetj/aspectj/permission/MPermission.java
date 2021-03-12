@@ -13,5 +13,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface MPermission {
     String[] value();
-    boolean isRequest() default false;
+    boolean isRequest() default true;
 }

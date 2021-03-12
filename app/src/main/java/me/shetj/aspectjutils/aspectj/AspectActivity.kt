@@ -11,6 +11,7 @@ import me.shetj.aspectj.network.CheckNetwork
 import me.shetj.aspectj.permission.MPermission
 import me.shetj.aspectj.sharepre.SPrefs
 import me.shetj.aspectjutils.R
+import me.shetj.base.ktx.logi
 import me.shetj.base.mvp.BaseActivity
 import me.shetj.base.tools.app.ArmsUtils
 
@@ -69,7 +70,8 @@ class AspectActivity : BaseActivity<AspectPresenter>() {
     @SPrefs(key = "test")
     fun testSPrefs(): String {
         val get = SPUtils.get(this, "test", "xxx")
-        return "hahahah ${int++}"
+        get.toString().logi()
+        return "get ${int++}"
     }
 
 
